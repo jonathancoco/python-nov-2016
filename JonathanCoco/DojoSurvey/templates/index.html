@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Dojo Survey Index</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css')}}">
+    </head>
+    <body>
+        <div id="container">
+
+            <h3> Coding Dojo Survey </h3>
+
+            <form action='/users' method='post'>
+                <p>Your Name:</p><input type='text' name='name'><br>
+                <p>Email:</p><input type='text' name='email'><br>
+                <p>Location:</p> <select name="location">
+                              <option value="dallas">Dallas</option>
+                              <option value="san jose">San Jose</option>
+                              <option value="seattle">Seattle</option>
+                        </select><br>
+                <p>Language:</p> <select name="language">
+                              <option value="ruby">ruby</option>
+                              <option value="python">python</option>
+                              <option value="php">php</option>
+                        </select><br>
+                <p>Comment:</p><input type='textarea' rows="10", cols="30" name='comment'><br>
+                <input type='submit' id="createuser" value='create user'>
+            </form>
+        </div>
+
+    </body>
+</html>

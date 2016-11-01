@@ -1,0 +1,28 @@
+#container{
+    width:350px;
+    background-color: lightgrey;
+    margin: 0 auto;
+}
+
+h3 {
+    color: blue;
+    text-align: center;
+}
+
+form input,
+form select,
+form textarea{
+    width: 200px;
+    display: inline-block;
+}
+
+form p{
+    width: 100px;
+    margin: 10px;
+    display: inline-block;
+}
+
+#createuser{
+    margin-left: 150px;
+    width: 80px;
+}
