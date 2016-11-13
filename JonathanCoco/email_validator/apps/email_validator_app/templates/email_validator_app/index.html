@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Email Validation</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'email_validator_app/css/styles.css' %}">
+    </head>
+    <body>
+
+        <div id="container">
+
+            <h1>Email Validator / Logger</h1>
+
+            {% if message != '' %}
+                <p>{{message}}<p>
+            {% endif %}
+
+            <form action='/add_email' method='POST'>
+                 {% csrf_token %}
+                <label for="email">Email:<input type="text" name="email" id="email"></label>
+                <input type="submit" value="Submit">
+            </form>
+
+        </div>
+
+    </body>
+</html>

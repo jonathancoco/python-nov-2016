@@ -1,0 +1,61 @@
+/*CSS reset settings here*/
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+}
+
+
+#container{
+    width: 500px;
+    margin: 0px auto;
+    background-color: lightgrey;
+    text-align: center;
+}
+
+
+form input{
+    display: inline-block;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom:  10px;
+}
+
+h1{
+    margin: 0 auto;
+    text-align: center;
+}
+
+p{
+    margin:  0 auto;
+    text-align: center;
+}
+
+
+#success{
+    width:200px;
+    height: 100px;
+    background-color: green;
+    margin: 10px;
+    padding-top: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+#results{
+    width:475px;
+    background-color: white;
+    display: block;
+    margin: 0px auto
+}
+
+#resultlist{
+    width: 475px;
+    size: 10;
+}
+
+.action_forms{
+    display: inline-block;
+}
