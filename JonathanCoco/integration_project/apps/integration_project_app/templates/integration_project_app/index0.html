@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Login and Registration App</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'integration_project_app/css/styles.css' %}?{% now 'U' %}" />
+    </head>
+    <body>
+
+        <h1> integration project </h1>
+
+        <a href="{% url 'courses:index' %}">This link will hit the index route in your courses_app</a><br>
+        <a href="{% url 'login:index' %}">This link will hit the index route in your login app</a>
+
+        <div id="user_courses">
+            <form action='add_user_course' method='POST'>
+                {% csrf_token %}
+                <select name="course_select">
+                {% for course in courses %}
+                    <option value="{{course.id}}">{{course.course_name}}</option>
+                {% endfor %}
+                </select>
+
+                <select name="user_select">
+                {% for user in users %}
+                    <option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+                {% endfor %}
+                </select>
+
+                <input type="submit" value="Add User/Course" class="buttons">
+            </form>
+
+            <table>
+                <thead>
+                    <td>Course ID</td>
+                    <td>Course Name</td>
+                    <td>User Name</td>
+                    <td>Date Added</td>
+                    <td>Delete</td>
+                </thead>
+                <tbody>
+                {% for user_course in user_courses %}
+                    <tr>
+                        <td>{{user_course.course.id}}</td>
+                        <td>{{user_course.course.course_name}}</td>
+                        <td>{{user_course.user.first_name}} {{user_course.user.last_name}}</td>
+                        <td>{{user_course.created_dt}}</td>
+                        <td>
+                            <form action="delete_user_course/{{user_course.id}}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Delete" class="button"><br>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

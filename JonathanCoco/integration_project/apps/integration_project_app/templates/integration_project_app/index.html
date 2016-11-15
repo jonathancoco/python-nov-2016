@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <title>Login and Registration App</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'integration_project_app/css/styles.css' %}?{% now 'U' %}" />
+    </head>
+    <body>
+
+        <h1> integration project </h1>
+
+        <a href="{% url 'courses:index' %}">This link will hit the index route in your courses_app</a><br>
+        <a href="{% url 'login:index' %}">This link will hit the index route in your login app</a>
+    
+    </body>
+</html>

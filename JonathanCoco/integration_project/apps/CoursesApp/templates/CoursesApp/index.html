@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new course - Django</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'CoursesApp/css/styles.css' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="body">
+            <h2>Add a new course</h2>
+            <form action="/courses/add_course" method="post">
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" name="name"></input><br>
+
+                <label for="description" >Description:</label>
+                <textarea name="description" rows="3" cols="20"></textarea></br>
+                <input type="submit" value="Add" class="button"><br>
+            </form>
+
+            <h2>Courses</h2>
+            <table>
+                <thead>
+                    <td>Course Name</td>
+                    <td>Description</td>
+                    <td>Date Added</td>
+                    <td>Delete</td>
+                    <td>Edit</td>
+                    <td>Comments</td>
+                </thead>
+                <tbody>
+                {% for course in courses %}
+                    <tr>
+                        <td>{{course.course_name}}</td>
+                        <td>{{course.description_name}}</td>
+                        <td>{{course.created_at}}</td>
+                        <td>
+                            <form action="/courses/remove_course/{{course.id}}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Delete" class="button"><br>
+                            </form>
+                        </td>
+                        <td>
+                            <td>
+                                <form action="/courses/edit_course/{{course.id}}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Edit" class="button"><br>
+                                </form>
+                            </td>
+                        </td>
+                        <td>
+                            <td>
+                                <form action="/courses/view_comments/{{course.id}}" method="post">
+                                    {% csrf_token %}
+                                    <input type="submit" value="Comments" class="button"><br>
+                                </form>
+                            </td>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+            <h2>View User Courses</h2>
+            <form action="/courses/view_user_courses" method="post">
+                {% csrf_token %}
+                <input type="submit" value="View" class="button"><br>
+            </form>
+        </div>
+
+        <form action="/" method='POST'>
+            {% csrf_token %}
+            <input type="submit" value="Main Page" class="buttons">
+        </form>
+    </div>
+</body>
+</html>
