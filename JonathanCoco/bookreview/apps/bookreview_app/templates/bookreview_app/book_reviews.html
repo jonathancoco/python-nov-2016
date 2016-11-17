@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>Book</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'bookreview_app/css/styles.css' %}?{% now 'U' %}" />
+    </head>
+    <body>
+
+        <div id="container">
+            <div id="header_1">
+                <h1>Welcome, {{user.first_name}}!</h1>
+            </div>
+            <div id="header_2">
+                <form action="/" id="home" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('home').submit()">Home</a>
+                </form>
+
+                <form action="/logout" id="logout" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('logout').submit()">Logout</a>
+                </form>
+            </div>
+
+
+            <div id="left_half">
+                <h2>Title: {{book.title}}</h2>
+                <h3>Author: {{book.author}}</h3>
+                <br>
+                <h3>Reviews</h3>
+                {% for review in book.book_reviews.all|dictsortreversed:"created_at" %}
+                    <hr>
+                    <br>
+                    <div class="review">
+                        {% if review.rating == 1 %}
+                            {% load static %} <img src="{% static "images/5_Star_Rating_System_1_star.png" %}" height="20px" alt="1" />
+                        {% elif review.rating == 2 %}
+                            {% load static %} <img src="{% static "images/5_Star_Rating_System_2_stars.png" %}" height="20px" alt="2" />
+                        {% elif review.rating == 3 %}
+                            {% load static %} <img src="{% static "images/5_Star_Rating_System_3_stars.png" %}" height="20px" alt="3" />
+                        {% elif review.rating == 4 %}
+                            {% load static %} <img src="{% static "images/5_Star_Rating_System_4_stars.png" %}" height="20px" alt="4" />
+                        {% else %}
+                            {% load static %} <img src="{% static "images/5_Star_Rating_System_5_stars.png" %}" height="20px" alt="5" />
+                        {% endif %}
+                        <br>
+
+                        <div id="review_text">
+                            <form action="/user/{{review.user.id}}" id="review_user_{{review.user.id}}" method="GET" class="links">
+                                {% csrf_token %}
+                                <a href="#" onclick="document.getElementById('review_user_{{review.user.id}}').submit()">{{review.user.first_name}}</a>
+                            </form>
+                            <p>{{review.review}}</p>
+                            </p>Posted on {{review.created_at}}</p>
+                        </div>
+
+                        <div id="review_delete">
+                            {% if review.user.id == request.session.user_id %}
+                                <form action="/delete_review/{{review.id}}" id="delete_review_{{review.id}}" method="GET" class="links">
+                                    {% csrf_token %}
+                                    <a href="#" onclick="document.getElementById('delete_review_{{review.id}}').submit()">Delete</a>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div id="right_half">
+                <form action='/add_review/{{book.id}}' method='POST'>
+                     {% csrf_token %}
+                    <label for="review">Review:</label><textarea name="review" id="review" rows="3" cols="40"></textarea><br>
+
+                    <label for="rating">Rating:</label>
+                    <select name="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+
+                    <input type="submit" value="Submit Review">
+                </form>
+            </div>
+
+        </div>
+    </body>
+</html>
