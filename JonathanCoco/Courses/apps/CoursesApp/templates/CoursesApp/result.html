@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey App - Result</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'SurveyFormApp/css/styles.css' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <p>Form has been submitted {{request.session.count}} times </p>
+        </div>
+
+        <div id="body">
+            <p>Name: {{request.session.name}}</p>
+            <p>Language: {{request.session.language}}</p>
+            <p>Location: {{request.session.location}}</p>
+            <p>Comment: {{request.session.comment}}</p>
+
+            <div id="container">
+                <form action="/" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Go Back"><br>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
