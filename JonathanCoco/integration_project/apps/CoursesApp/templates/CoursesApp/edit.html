@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Course</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'CoursesApp/css/styles.css' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="body">
+            <h2>Edit Course</h2>
+
+            <form action="/courses/save_course/{{course.id}}" method="post">
+                {% csrf_token %}
+                <label for="name">Name:</label>
+                <input type="text" name="name" value={{course.course_name}}></input><br>
+
+                <label for="description">Description:</label>
+                <textarea name="description" rows="3" cols="20">{{course.description_name}}</textarea></br>
+
+                <input type="submit" value="Save" class="button"><br>
+            </form>
+
+            <form action="/courses/" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Cancel" class="button"><br>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

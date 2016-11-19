@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>User Courses</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'CoursesApp/css/styles.css' %}?{% now 'U' %}" />
+    </head>
+    <body>
+
+        <h1> User Courses </h1>
+
+        <div id="user_courses">
+            <form action='add_user_course' method='POST'>
+                {% csrf_token %}
+                <select name="course_select">
+                {% for course in courses %}
+                    <option value="{{course.id}}">{{course.course_name}}</option>
+                {% endfor %}
+                </select>
+
+                <select name="user_select">
+                {% for user in users %}
+                    <option value="{{user.id}}">{{user.first_name}} {{user.last_name}}</option>
+                {% endfor %}
+                </select>
+
+                <input type="submit" value="Add User/Course" class="buttons">
+            </form>
+
+            <form action="{% url 'courses:index' %}" method='POST'>
+                {% csrf_token %}
+                <input type="submit" value="Home" class="buttons">
+            </form>
+
+            <table>
+                <thead>
+                    <td>Course ID</td>
+                    <td>Course Name</td>
+                    <td>User Name</td>
+                    <td>Date Added</td>
+                    <td>Delete</td>
+                </thead>
+                <tbody>
+                {% for user_course in user_courses %}
+                    <tr>
+                        <td>{{user_course.course.id}}</td>
+                        <td>{{user_course.course.course_name}}</td>
+                        <td>{{user_course.user.first_name}} {{user_course.user.last_name}}</td>
+                        <td>{{user_course.created_dt}}</td>
+                        <td>
+                            <form action="delete_user_course/{{user_course.id}}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Delete" class="button"><br>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

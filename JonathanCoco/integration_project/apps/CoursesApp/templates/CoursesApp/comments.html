@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments of Course - Django</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'CoursesApp/css/styles.css' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="body">
+            <p>Course Name: {{course.course_name}}</p>
+            <p>Course Description: {{course.course_description}}</p>
+
+            <h2>Add a new comment</h2>
+            <form action="/courses/add_comment/{{course.id}}" method="post">
+                {% csrf_token %}
+                <label for="comment" >Comment:</label>
+                <textarea name="comment" rows="3" cols="20"></textarea></br>
+                <input type="submit" value="Add" class="button"><br>
+            </form>
+
+            <form action="/courses/" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Close" class="button"><br>
+            </form>
+
+            <h2>Courses</h2>
+            <table>
+                <thead>
+                    <td>Comment</td>
+                    <td>Date Added</td>
+                </thead>
+                <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{comment.comment_name}}</td>
+                        <td>{{comment.created_at}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

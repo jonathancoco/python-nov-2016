@@ -1,0 +1,48 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+}
+
+
+#container{
+    width: 400px;
+    margin: 0px auto;
+    background-color: lightgrey;
+}
+
+#login_registration{
+    width: 400px;
+    display: inline-block;
+}
+
+
+
+label{
+    width: 100px;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.buttons{
+    margin-left: 10px;
+    width: 75px;
+}
+
+input{
+    display: inline-block;
+    margin-bottom:  10px;
+}
+
+.error_message{
+    display: block;
+}
+
+h1{
+    text-align:center;
+    margin-bottom: 10px;
+}
+
+h2{
+    margin-bottom: 10px;
+}
