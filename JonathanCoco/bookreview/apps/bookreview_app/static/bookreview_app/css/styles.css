@@ -1,0 +1,138 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+}
+
+
+#container{
+    width: 840px;
+    margin: 0px auto;
+    background-color: lightgrey;
+}
+
+#book_review_container{
+    margin: 0px auto;
+    background-color: lightgrey;
+}
+
+#login_registration{
+    width: 400px;
+    display: inline-block;
+}
+
+#left_half{
+    width: 400px;
+    display: inline-block;
+    margin: 0px auto;
+}
+
+#right_half{
+    width: 400px;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0px auto;
+}
+
+.review{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.add_review_button{
+    width: 150px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#header_1,
+#header_2{
+    display: inline-block;
+    width: 400px;
+}
+
+#header_2{
+    text-align: right;
+}
+
+#header_2 form{
+    display: inline-block;
+}
+
+#author_div{
+    margin-left: 20px;
+}
+
+.author_label{
+    width: 200px;
+    display: inline-block;
+}
+
+.author_p{
+    margin-left: 10px;
+}
+
+.author_select{
+    width:  200px;
+}
+
+.review{
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.review_select{
+    margin-left:  0px;
+}
+
+#review_text{
+    display: inline-block;
+    width: 250px;
+}
+
+#review_delete{
+    display: inline-block;
+    width: 100px;
+    vertical-align: middle;
+}
+
+.title_input{
+    width: 300px;
+}
+
+
+label{
+    width: 100px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+textarea{
+    vertical-align: top;
+}
+
+
+
+.buttons{
+    margin-left: 10px;
+    width: 75px;
+}
+
+input{
+    display: inline-block;
+    margin-bottom:  10px;
+}
+
+.error_message{
+    display: block;
+}
+
+h1{
+    text-align:center;
+    margin-bottom: 10px;
+}
+
+h2{
+    margin-bottom: 10px;
+}

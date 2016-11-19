@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>User</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'bookreview_app/css/styles.css' %}?{% now 'U' %}" />
+    </head>
+    <body>
+
+        <div id="container">
+            <div id="header_1">
+                <h2>User: {{user.first_name}} {{user.last_name}}</h2>
+            </div>
+            <div id="header_2">
+                <form action="/" id="home" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('home').submit()">Home</a>
+                </form>
+
+                <form action="/add" id="add_book_and_review" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('add_book_and_review').submit()">Add Book and Review</a>
+                </form>
+
+                <form action="/logout" id="logout" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('logout').submit()">Logout</a>
+                </form>
+            </div>
+
+
+            <div id="left_half">
+                <p>Email: {{user.email}}</p>
+                <p>Total Reviews: {{user.user_reviews.count}}</p>
+                <br>
+                <h3>Posted Reviews on the following books:</h3>
+                <hr>
+                <br>
+                {% for review in user.user_reviews.all|dictsortreversed:"created_at" %}
+                <div class="review">
+                    <form action="/book_reviews/{{review.book.id}}" id="reviewed_book_{{review.book.id}}" method="GET" class="links">
+                        {% csrf_token %}
+                        <a href="#" onclick="document.getElementById('reviewed_book_{{review.book.id}}').submit()">{{review.book.title}}</a>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>
