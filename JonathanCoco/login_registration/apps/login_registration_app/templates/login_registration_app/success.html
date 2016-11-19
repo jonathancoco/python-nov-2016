@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Login and Registration App</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'login_registration_app/css/styles.css' %}?{% now 'U' %}" />
+    </head>
+    <body>
+
+        <div id="container">
+            <h1>Welcome User {{user.first_name}} {{user.last_name}}</h1>
+            <h2>{{message}}</h2>
+            
+            <form action='/' method='POST'>
+                {% csrf_token %}
+                <input type="submit" value="Home" class="buttons">
+            </form>
+        </div>
+
+    </body>
+</html>
