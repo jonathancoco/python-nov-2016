@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Product - Django</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'restful_app/css/styles.css' %}?{% now 'U' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="body">
+            <h2>Product {{product.id}}</h2>
+            <p class="product">Name:</p>
+            <p class="product">{{product.name}}</p>
+            <br>
+
+            <p class="product">Description:</p>
+            <p class="product">{{product.description}}</p>
+            <br>
+
+            <p class="product">Price:</p>
+            <p class="product">${{product.price}}</p>
+        </div>
+
+        <form action="/products/{{product.id}}/edit" id="edit_product" method="GET" class="links">
+            {% csrf_token %}
+            <a href="#" onclick="document.getElementById('edit_product').submit()">Edit |</a>
+        </form>
+
+        <form action="/products" id="home" method="GET" class="links">
+            {% csrf_token %}
+            <a href="#" onclick="document.getElementById('home').submit()">Back</a>
+        </form>
+
+    </div>
+</body>
+</html>

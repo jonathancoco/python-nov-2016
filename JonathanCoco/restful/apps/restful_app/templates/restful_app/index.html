@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restful Product - Django</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'restful_app/css/styles.css' %}?{% now 'U' %}">
+</head>
+<body>
+    <div id="container">
+        <div id="body">
+            <h2>Products</h2>
+            <table>
+                <thead>
+                    <td>Name</td>
+                    <td>Description</td>
+                    <td>Price</td>
+                    <td>Actions</td>
+                </thead>
+                <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{product.name}}</td>
+                        <td>{{product.description}}</td>
+                        <td>${{product.price}}</td>
+
+                        <td>
+                            <form action="/products/{{product.id}}" id="show_product" method="GET">
+                                {% csrf_token %}
+                                <a href="#" onclick="document.getElementById('show_product').submit()">Show</a>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/products/{{product.id}}/edit" id="edit_product" method="GET">
+                                {% csrf_token %}
+                                <a href="#" onclick="document.getElementById('edit_product').submit()">Edit</a>
+                            </form>
+                        </td>
+
+                        <td>
+                            <form action="/products/{{product.id}}/delete" method="POST">
+                                {% csrf_token %}
+                                <input type="submit" value="Remove" class="button"><br>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+            <form action="/products/new" id="new_product" method="GET">
+                {% csrf_token %}
+                <a href="#" onclick="document.getElementById('new_product').submit()">Add a new product</a>
+            </form>
+
+
+
+        </div>
+    </div>
+</body>
+</html>
