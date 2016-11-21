@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Destroy Entry</title>
+	</head>
+	<body>
+		{% if course%}
+		
+		<h1>Are you sure you want to destroy the following course</h1>
+		<label>Name: <p>{{course.course_name}}</p></label>
+		<label>Description: <p>{{course.description}}</p></label>
+		<button><a href="/remove/{{course.id}}">DESTROY FOREVER</a></button>
+		<button><a href="/">Return to Main Page</a></button>
+
+
+		{% endif %}
+	</body>
+</html>
