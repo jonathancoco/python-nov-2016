@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Poke Users">
+        <title>Property Search</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'property_search_app/css/styles.css' %}?{% now 'U' %}" />
+    </head>
+
+    <body>
+
+        <div id="container">
+
+            <div id="header_1">
+                <h3>Property {{property.prop_id}}</h3>
+            </div>
+
+            <div id="header_2">
+                <form action="/view_search_results/{{request.session.current_page}}" id="search_results" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('search_results').submit()">Search Results</a>
+                </form>
+
+                <form action="/logout" id="logout" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('logout').submit()">Logout</a>
+                </form>
+            </div>
+
+            <div id="results">
+                <h2>Summary Information</h2>
+                <table>
+                    <tr>
+                        <td>Property:</td>
+                        <td>{{property.prop_id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Owner</td>
+                        <td>{{property.owner_name}}<br>{{property.address}}</td>
+                    </tr>
+
+                    <tr></tr>
+
+                    <tr>
+                        <td>DBA</td>
+                        <td>{{property.dba_name}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Situs</td>
+                        <td>{{property.situs_display}}</td>
+                    </tr>
+                    <tr>
+                        <td>Legal</td>
+                        <td>{{property.legal_desc}}</td>
+                    </tr>
+                    <tr>
+                        <td>Subdivision</td>
+                        <td>{{property.abs_subdv_desc}}</td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td>{{property.city_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>School</td>
+                        <td>{{property.school_name}}</td>
+                    </tr>
+                </table>
+
+                <hr>
+                <h2>Map Location</h2>
+                <div id="map"></div>
+                <script>
+                    function initMap() {
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                      zoom: 20,
+                      center: {lat: {{geocode.lat}}, lng: {{geocode.lng}}}
+                    });
+
+                    var marker = new google.maps.Marker({
+                      map: map,
+                      position: {lat: {{geocode.lat}}, lng: {{geocode.lng}}}
+                    });
+
+                    }
+                </script>
+                <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSSM8SAfdieagJmf6m1zQ4TbSb14JDjFA&callback=initMap">
+                </script>
+
+                <hr>
+
+                {% load humanize %}
+                <h2>Value Breakdown</h2>
+                <table>
+                    <tr>
+                        <td>Improvement Value</td>
+                        <td class="right_justify">{{property.imprv_val|floatformat:0|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Land Value</td>
+                        <td class="right_justify">{{property.land_val|floatformat:0|intcomma}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Ag Use</td>
+                        <td class="right_justify">{{property.ag_use_val|floatformat:0|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ag Market</td>
+                        <td class="right_justify">{{property.ag_market|floatformat:0|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Market</td>
+                        <td class="right_justify">{{property.market|floatformat:0|intcomma}}</td>
+                    </tr>
+                </table>
+
+                <hr>
+
+                <h2>Value Comparison</h2>
+                <table>
+                    <thead>
+                        <th>CAD Value</th>
+                        <th>Zillow Value</th>
+                        <th>% Diff</th>
+                    </thead>
+                    <tr>
+                        <td class="right_justify">{{property.market|floatformat:0|intcomma}}</td>
+                        <td class="right_justify">{{zEstimate|floatformat:0|intcomma}}</td>
+                        <td class="right_justify">{{pct_diff}}%</td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </body>
+</html>

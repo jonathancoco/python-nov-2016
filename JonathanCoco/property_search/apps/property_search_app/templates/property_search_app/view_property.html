@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DFW Tax Agents</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      /*background-color: #f1f1f1; */
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+
+
+    /* Always set the map height explicitly to define the size of the div
+          * element that contains the map. */
+    #map {
+          height: 400px;
+          width: 100%;
+         }
+
+     #floating-panel {
+       position: absolute;
+       top: 10px;
+       left: 25%;
+       z-index: 5;
+       background-color: #fff;
+       padding: 5px;
+       border: 1px solid #999;
+       text-align: center;
+       font-family: 'Roboto','sans-serif';
+       line-height: 30px;
+       padding-left: 10px;
+     }
+
+     .red_override{
+         color: red !important;
+     }
+     </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">DFW Tax Agents</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Home</a></li>
+                    <li class="active"><a href="/view_search" >Property Search</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/view_search_results/{{request.session.current_page}}">Back to Search Results</a></li>
+                    <li></li>
+                    {% if user.id > 0 %}
+                    <li><a href="#">Welcome, {{user.first_name}}</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                    <li><a href="/view_login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid text-center">
+        <div class="row content">
+            <div class="col-sm-1 sidenav">
+            </div>
+
+            <div class="col-sm-10 text-left">
+
+                <h2>Summary Information</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td>Property:</td>
+                        <td>{{property.prop_id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Owner</td>
+                        <td>{{property.owner_name}}<br>{{property.address}}</td>
+                    </tr>
+                    <tr></tr>
+                    <tr>
+                        <td>DBA</td>
+                        <td>{{property.dba_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Situs</td>
+                        <td>{{property.situs_display}}</td>
+                    </tr>
+                    <tr>
+                        <td>Legal</td>
+                        <td>{{property.legal_desc}}</td>
+                    </tr>
+                    <tr>
+                        <td>Subdivision</td>
+                        <td>{{property.abs_subdv_desc}}</td>
+                    </tr>
+                    <tr>
+                        <td>City</td>
+                        <td>{{property.city_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>School</td>
+                        <td>{{property.school_name}}</td>
+                    </tr>
+                </table>
+
+                <h2>Value Comparison</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <th>Agency</th>
+                        <th>Agency Value</th>
+                        <th>CAD Value</th>
+                        <th>Difference</th>
+                    </thead>
+
+                    {% load humanize %}
+                    <tr>
+                        <td>DFW Tax Agents</td>
+                        <td>{{dfwEstimate|floatformat:0|intcomma}}</td>
+                        <td>{{property.market|floatformat:0|intcomma}}</td>
+                        <td>{{dfwEstimate_diff|floatformat:0|intcomma}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Zillow</td>
+                        <td>{{zEstimate|floatformat:0|intcomma}}</td>
+                        <td>{{property.market|floatformat:0|intcomma}}</td>
+                        <td>{{zEstimate_diff|floatformat:0|intcomma}}</td>
+                    </tr>
+
+                    <tr>
+                        <td>MLS</td>
+                        <td>{{mlsEstimate|floatformat:0|intcomma}}</td>
+                        <td>{{property.market|floatformat:0|intcomma}}</td>
+                        <td>{{mlsEstimate_diff|floatformat:0|intcomma}}</td>
+                    </tr>
+                </table>
+
+
+                {% ifnotequal message "" %}
+                <a href="mailto:cocojonathan@yahoo.com?subject=Tax Savings on Property:{{property.prop_id}}&body={{property.owner_name}}%0D%0A%0D%0A{{property.situs_display}}%0D%0A%0D%0A{{property.legal_desc}}"><h1 class="red_override">{{message}}<h3> </a>
+                {% else %}
+                {% endifnotequal %}
+
+
+                <hr>
+                <h2>Map Location</h2>
+                <div id="map"></div>
+                <script>
+                    function initMap() {
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 20,
+                    center: {lat: {{geocode.lat}}, lng: {{geocode.lng}}}
+                    });
+
+                    var marker = new google.maps.Marker({
+                    map: map,
+                    position: {lat: {{geocode.lat}}, lng: {{geocode.lng}}}
+                    });
+
+                    }
+                    </script>
+                    <script async defer
+                    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCSSM8SAfdieagJmf6m1zQ4TbSb14JDjFA&callback=initMap">
+                </script>
+
+                <hr>
+
+                {% load humanize %}
+                <h2>Value Breakdown</h2>
+                <table class="table table-striped">
+                    <tr>
+                        <td>Improvement Value</td>
+                        <td class="right_justify">{{property.imprv_val|floatformat:0|intcomma}}</td>
+                        </tr>
+                    <tr>
+                        <td>Land Value</td>
+                        <td class="right_justify">{{property.land_val|floatformat:0|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ag Use</td>
+                        <td class="right_justify">{{property.ag_use_val|floatformat:0|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Ag Market</td>
+                        <td class="right_justify">{{property.ag_market|floatformat:0|intcomma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Market</td>
+                        <td class="right_justify">{{property.market|floatformat:0|intcomma}}</td>
+                    </tr>
+                </table>
+                <hr>
+            </div>
+            <div class="col-sm-1 sidenav">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

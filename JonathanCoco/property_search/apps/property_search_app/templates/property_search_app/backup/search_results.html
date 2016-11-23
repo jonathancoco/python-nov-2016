@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Poke Users">
+        <title>Property Search</title>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'property_search_app/css/styles.css' %}?{% now 'U' %}" />
+    </head>
+
+    <body>
+
+        <div id="container">
+
+            <div id="header_1">
+                <h3>Welcome, {{user.first_name}}, to Collin County Property Search/Comparison!</h3>
+            </div>
+
+            <div id="header_2">
+                <form action="/" id="search" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('search').submit()">Refine Search</a>
+                </form>
+                <form action="/logout" id="logout" method="GET" class="links">
+                    {% csrf_token %}
+                    <a href="#" onclick="document.getElementById('logout').submit()">Logout</a>
+                </form>
+            </div>
+
+
+            <div class="page_links">
+                {% for i in pages %}
+                    {% if i == request.session.current_page %}
+                        <div class="pages">
+                            <p class="pages">{{i}}</p>
+                        </div>
+                    {% else %}
+                        <div class="pages">
+                            <form action="/view_search_results/{{i}}" id="view_search_results{{i}}" method="GET" class="pages">
+                                {% csrf_token %}
+                                <a href="#" onclick="document.getElementById('view_search_results{{i}}').submit()">{{i}}</a>
+                            </form>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+
+            <div id="results">
+                <p>Search Resutls</p>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>
+                            <form action="/sort_list/name" id="sort_owner_name" method="GET" class="links">
+                                {% csrf_token %}
+                                <a href="#" onclick="document.getElementById('sort_owner_name').submit()">Owner Name</a>
+                            </form>
+                        </th>
+                        <th>
+                            <form action="/sort_list/address" id="sort_address" method="GET" class="links">
+                                {% csrf_token %}
+                                <a href="#" onclick="document.getElementById('sort_address').submit()">Address</a>
+                            </form>
+                        </th>
+                        <th>
+                            <form action="/sort_list/value" id="sort_value" method="GET" class="links">
+                                {% csrf_token %}
+                                <a href="#" onclick="document.getElementById('sort_value').submit()">Value</a>
+                            </form>
+                        </th>
+                        <th>Action</th>
+                    </tr>
+
+                    {% load humanize %}
+                    {% for property in property_search_results %}
+                        <tr>
+                            <td>{{property.prop_id}}</td>
+                            <td>{{property.owner_name}}</td>
+                            <td>{{property.situs_display}}</td>
+                            <td class="right_justify">{{property.market|floatformat:0|intcomma}}</td>
+                            <td>
+                                <form action="/view_property/{{property.prop_id}}" id="view_property_{{property.prop_id}}" method="POST" class="links">
+                                    {% csrf_token %}
+                                    <a href="#" onclick="document.getElementById('view_property_{{property.prop_id}}').submit()">View</a>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+
+        </div>
+    </body>
+</html>

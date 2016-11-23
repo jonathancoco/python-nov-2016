@@ -1,0 +1,157 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+}
+
+
+#container{
+    width: 800px;
+    margin: 0px auto;
+    padding: 10px;
+}
+
+
+#login_container{
+    width: 660px;
+    margin: 0px auto;
+}
+
+
+#registration{
+    width: 300px;
+    display: inline-block;
+    border-style: solid;
+    margin: 10px;
+}
+
+
+#login{
+    width: 300px;
+    display: inline-block;
+    vertical-align: top;
+    border-style: solid;
+    margin: 10px;
+}
+
+
+#header_1{
+    display: inline-block;
+    width: 650px;
+}
+
+#header_2{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    vertical-align: top;
+}
+
+#header_2 form{
+    display: inline-block;
+}
+
+#poke_history{
+    padding: 10px;
+    margin-top:  10px;
+    margin-bottom: 10px;
+    border-style: solid;
+    width: 300px;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
+table{
+    margin-top: 10px;
+    width: 795px;
+}
+
+th, td{
+    padding: 5px
+}
+
+label{
+    width: 100px;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+
+.buttons{
+    margin-top:10px;
+    margin-left: 10px;
+    width: 75px;
+}
+
+input{
+    display: inline-block;
+    margin-bottom:  10px;
+}
+
+.error_message{
+    display: block;
+}
+
+h1{
+    margin-bottom: 10px;
+}
+
+h2{
+    margin-bottom: 10px;
+}
+
+#search_criteria{
+    width: 500px;
+    display: inline-block;
+}
+
+#search_buttons{
+    display: inline-block;
+}
+
+#search{
+    margin: 10px;
+}
+
+.right_justify{
+    text-align: right;
+}
+
+hr{
+    margin: 15px;
+}
+
+.page_links{
+    display: inline-block;
+    text-align: right;
+    width: 800px;
+}
+
+.pages{
+    display: inline;
+}
+
+
+/* Always set the map height explicitly to define the size of the div
+      * element that contains the map. */
+#map {
+      height: 400px;
+      width: 100%;
+     }
+
+ #floating-panel {
+   position: absolute;
+   top: 10px;
+   left: 25%;
+   z-index: 5;
+   background-color: #fff;
+   padding: 5px;
+   border: 1px solid #999;
+   text-align: center;
+   font-family: 'Roboto','sans-serif';
+   line-height: 30px;
+   padding-left: 10px;
+ }

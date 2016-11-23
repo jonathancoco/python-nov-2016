@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DFW Tax Agents</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+     /* background-color: #f1f1f1; */
+      height: 100%;
+    }
+
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    }
+    </style>
+
+    <script>
+      $(document).ready(function () {
+
+
+          $('#dataSearch').submit(function()
+              {
+
+                  if ( ($('#property_id').val() == '') &
+                       ($('#geo_id').val() == '') &
+                       ($('#dba_name').val() == '') &
+                       ($('#street_number').val() == '') &
+                       ($('#street_name').val() == '') &
+                       ($('#owner_name').val() == ''))
+                  {
+                      var strErrorMessage = "You must specify at least one search criteria! ";
+
+                      alert(strErrorMessage);
+
+                      return false;
+                  }
+
+                  return true;
+              }
+
+          )
+
+          $('#dataClear').submit(function()
+              {
+                  $("#property_id").val('');
+                  $("#geo_id").val('');
+                  $("#owner_name").val('');
+                  $("#dba_name").val('');
+                  $("#street_number").val('');
+                  $("#street_name").val('');
+
+                  return false;
+              }
+          )
+      })
+    </script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">DFW Tax Agents</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/view_search" >Property Search</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.id > 0 %}
+                <li><a href="#">Welcome, {{user.first_name}}</a></li>
+                <li><a href="/logout">Logout</a></li>
+                {% else %}
+                <li><a href="/view_login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+
+
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-1 sidenav">
+        </div>
+        <div class="col-sm-10 text-left">
+            <form action='/search' id="dataSearch" method='POST' class="form-horizontal">
+                {% csrf_token %}
+                <h4>Property Identification</h4>
+                <div class="form-group">
+                    <label class= "control-label col-sm-2" for "property_id">Property ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" size="25" name="property_id" class="form-control" id="property_id" value="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class= "control-label col-sm-2" for "geo_id">GEO ID</label>
+                    <div class="col-sm-4">
+                        <input type="text" size="25" class="form-control" name="geo_id" id="geo_id" value="">
+                    </div>
+                </div>
+
+                <h4>Owner/DBA Information</h4>
+                <div class="form-group">
+                    <label class= "control-label col-sm-2" for "owner_name">Owner Name</label>
+                    <div class="col-sm-4">
+                        <input type="text" size="60" class="form-control" name="owner_name" id="owner_name" value="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class= "control-label col-sm-2" for "dba_name">DBA</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" size="60" name="dba_name" id="dba_name" value="">
+                    </div>
+                </div>
+
+                <h4>Property Address</h4>
+                <div class="form-group">
+                    <label class= "control-label col-sm-2" for "street_number">Street Number</label>
+                    <div class="col-sm-4">
+                        <input type="text" size="25" class="form-control"  name="street_number" id="street_number" value="">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class= "control-label col-sm-2" for "street_name">Street Address</label>
+                    <div class="col-sm-4">
+                        <input type="text" size="60" class="form-control"  name="street_name" id="street_name" valuesize="60">
+                    </div>
+                </div>
+
+                <input type="submit" value="Search" class="btn btn-default">
+            </form>
+
+            <form action="clear" id="dataClear" method ="POST">
+                <input type="submit" value="Clear all fields" class="btn btn-default">
+            </form>
+        </div>
+            <div class="col-sm-1 sidenav">
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
